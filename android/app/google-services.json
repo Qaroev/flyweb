@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "280496909149",
+    "project_id": "yabao-98302",
+    "storage_bucket": "yabao-98302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280496909149:android:3c6e2a1c7f7ef2caa696b4",
+        "android_client_info": {
+          "package_name": "lu.yabao.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280496909149-3f2lff64frabcuop4ne16dein2qqe5lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW71c1cYoZ4z2dU6nPMGm47Jor3Y7TBmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280496909149-3f2lff64frabcuop4ne16dein2qqe5lp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "280496909149-7hn0d9qh1bo01698eerfk5sk96lo5cuo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pro.yabao"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
