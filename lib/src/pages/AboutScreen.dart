@@ -124,7 +124,8 @@ class _AboutScreen extends State<AboutScreen> {
   }
 
   Widget _renderSocialList(List<Social> socials, context) {
-    return new Wrap(
+    print(socials[0].url);
+    return Wrap(
       spacing: 20.0,
       runSpacing: 30,
       alignment: WrapAlignment.center,

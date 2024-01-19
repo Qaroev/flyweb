@@ -103,6 +103,60 @@ class _SideMenuElement extends State<SideMenuElement> {
                       text: renderMenuTitle(menu, languageCode),
                       type: menu.type!,
                       onTap: () async {
+                        if (renderMenuTitle(menu, languageCode) ==
+                            "Группа Telegram") {
+                          var url = menu.url;
+                          if (menu.type == 'home') {
+                            url = renderLang("url", languageCode);
+                          }
+                          if (menu.type == 'url') {
+                            url = renderMenuUrl(menu, languageCode);
+                          }
+                          if (!await launchUrl(
+                            Uri.parse(url!),
+                            mode: LaunchMode.externalApplication,
+                          )) {
+                            throw Exception(
+                                'Could not launch ${Uri.parse(url)}');
+                          }
+                          return;
+                        }
+                        if (renderMenuTitle(menu, languageCode) ==
+                            "Помощь WhatsApp") {
+                          var url = menu.url;
+                          if (menu.type == 'home') {
+                            url = renderLang("url", languageCode);
+                          }
+                          if (menu.type == 'url') {
+                            url = renderMenuUrl(menu, languageCode);
+                          }
+                          if (!await launchUrl(
+                            Uri.parse(url!),
+                            mode: LaunchMode.externalApplication,
+                          )) {
+                            throw Exception(
+                                'Could not launch ${Uri.parse(url)}');
+                          }
+                          return;
+                        }
+                        if (renderMenuTitle(menu, languageCode) ==
+                            "Yabao Store") {
+                          var url = menu.url;
+                          if (menu.type == 'home') {
+                            url = renderLang("url", languageCode);
+                          }
+                          if (menu.type == 'url') {
+                            url = renderMenuUrl(menu, languageCode);
+                          }
+                          if (!await launchUrl(
+                            Uri.parse(url!),
+                            mode: LaunchMode.externalApplication,
+                          )) {
+                            throw Exception(
+                                'Could not launch ${Uri.parse(url)}');
+                          }
+                          return;
+                        }
                         if (menu.type == "about") {
                           Navigator.pop(context);
                           Navigator.push(
@@ -175,6 +229,7 @@ class _SideMenuElement extends State<SideMenuElement> {
   }
 
   Widget _renderSocialList(List<Social> socials) {
+    print(socials[0].url);
     return Wrap(
       children: socials
           .map(

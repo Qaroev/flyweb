@@ -1,7 +1,7 @@
 {
-  "api_base_url": "https://demo-flutter.one-mag.ru/admin-panel/",
+  "api_base_url": "https://app.yabao.lu/admin-panel",
   "firstColor": "#ffffff",
-  "secondColor": "#ffffff", 
+  "secondColor": "#ffffff",
   "appIdOneSignal": "89bc2bdb-fb97-41fe-8d2f-5dbc57764379",
   "defaultLanguage": "ru",
   "deeplink": "app.demo-flutter.scheme"

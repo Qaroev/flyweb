@@ -47,6 +47,8 @@
 	<string>ca-app-pub-7432665165146018~2664444130</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+        <string>viber</string>
+        <string>tg</string>
 		<string>youtube</string>
 		<string>whatsapp</string>
 		<string>twitter</string>

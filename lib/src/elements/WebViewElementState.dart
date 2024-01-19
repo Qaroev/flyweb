@@ -10,6 +10,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 //flutter_downloader
 //import 'package:flutter_downloader/flutter_downloader.dart';
 
@@ -79,7 +80,7 @@ class WebViewElementState extends State<WebViewElement>
 
   final Set<Factory<OneSequenceGestureRecognizer>> _gSet = [
     Factory<VerticalDragGestureRecognizer>(
-            () => VerticalDragGestureRecognizer()),
+        () => VerticalDragGestureRecognizer()),
     Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()),
     Factory<PanGestureRecognizer>(() => PanGestureRecognizer()),
   ].toSet();
@@ -110,7 +111,7 @@ class WebViewElementState extends State<WebViewElement>
       String bannerAdUnitId = Platform.isAndroid
           ? Setting.getValue(widget.settings.setting!, "admob_key_ad_banner")
           : Setting.getValue(
-          widget.settings.setting!, "admob_key_ad_banner_ios");
+              widget.settings.setting!, "admob_key_ad_banner_ios");
 
       BannerAd(
         adUnitId: bannerAdUnitId,
@@ -134,9 +135,9 @@ class WebViewElementState extends State<WebViewElement>
         "true") {
       String adInterstitialId = Platform.isAndroid
           ? Setting.getValue(
-          widget.settings.setting!, "admob_key_ad_interstitial")
+              widget.settings.setting!, "admob_key_ad_interstitial")
           : Setting.getValue(
-          widget.settings.setting!, "admob_key_ad_interstitial_ios");
+              widget.settings.setting!, "admob_key_ad_interstitial_ios");
 
       AdMobService.interstitialAdId = adInterstitialId;
 
@@ -146,9 +147,9 @@ class WebViewElementState extends State<WebViewElement>
           new Duration(
               seconds: int.parse(
                   Setting.getValue(widget.settings.setting!, "admob_dealy"))),
-              (timer) {
-            AdMobService.showInterstitialAd();
-          });
+          (timer) {
+        AdMobService.showInterstitialAd();
+      });
     }
   }
 
@@ -174,7 +175,7 @@ class WebViewElementState extends State<WebViewElement>
   void dispose() {
     _unbindBackgroundIsolate();
     webViewGPSPositionStreams.forEach(
-            (StreamSubscription<Position> _flutterGeolocationStream) =>
+        (StreamSubscription<Position> _flutterGeolocationStream) =>
             _flutterGeolocationStream.cancel());
     super.dispose();
   }
@@ -263,6 +264,7 @@ class WebViewElementState extends State<WebViewElement>
     }
     return externalStorageDirPath;
   }
+
   //flutter_downloader
   /*
   Future<void> downloadFile(String url, [String? filename]) async {
@@ -305,7 +307,7 @@ class WebViewElementState extends State<WebViewElement>
           Expanded(
               child: InAppWebView(
                   initialUrlRequest:
-                  URLRequest(url: Uri.parse(widget.initialUrl!)),
+                      URLRequest(url: Uri.parse(widget.initialUrl!)),
                   gestureRecognizers: _gSet,
                   initialOptions: InAppWebViewGroupOptions(
                       crossPlatform: InAppWebViewOptions(
@@ -354,7 +356,6 @@ class WebViewElementState extends State<WebViewElement>
                   },
                   shouldOverrideUrlLoading:
                       (controller, navigationAction) async {
-
                     //return NavigationActionPolicy.ALLOW;
                     var uri = navigationAction.request.url;
                     var url = navigationAction.request.url.toString();
@@ -378,7 +379,12 @@ class WebViewElementState extends State<WebViewElement>
                       print(url);
                       //url = Uri.encodeFull(url);
                       try {
-                        launchUrl(Uri.parse(url));
+                        if (!await launchUrl(
+                          Uri.parse(url),
+                          mode: LaunchMode.externalApplication,
+                        )) {
+                          throw Exception('Could not launch ${Uri.parse(url)}');
+                        }
                         return NavigationActionPolicy.CANCEL;
                       } catch (e) {
                         //launchUrl(Uri.parse(url!));
@@ -392,10 +398,13 @@ class WebViewElementState extends State<WebViewElement>
                       "javascript",
                       "about"
                     ].contains(uri!.scheme)) {
-                      if (await canLaunchUrl(Uri.parse(url!))) {
-                        await launchUrl(Uri.parse(url!));
-                        return NavigationActionPolicy.CANCEL;
+                      if (!await launchUrl(
+                        Uri.parse(url),
+                        mode: LaunchMode.externalApplication,
+                      )) {
+                        throw Exception('Could not launch ${Uri.parse(url)}');
                       }
+                      return NavigationActionPolicy.CANCEL;
                     }
                     return NavigationActionPolicy.ALLOW;
                   },
@@ -406,7 +415,8 @@ class WebViewElementState extends State<WebViewElement>
                         url: Uri.parse(url.url.toString()),
                         options: ChromeSafariBrowserClassOptions(
                             android: AndroidChromeCustomTabsOptions(
-                                shareState: CustomTabsShareState.SHARE_STATE_ON),
+                                shareState:
+                                    CustomTabsShareState.SHARE_STATE_ON),
                             ios: IOSSafariOptions(barCollapsingEnabled: true)));
 
                     /*checkPermission().then((hasGranted) async {
@@ -478,7 +488,7 @@ class WebViewElementState extends State<WebViewElement>
         },*/
                   androidOnPermissionRequest:
                       (InAppWebViewController controller, String origin,
-                      List<String> resources) async {
+                          List<String> resources) async {
                     print("androidOnPermissionRequest");
                     if (resources.length >= 1) {
                     } else {
@@ -521,7 +531,7 @@ class WebViewElementState extends State<WebViewElement>
                             case "getCurrentPosition":
                               _geolocationGetCurrentPosition(
                                   parseInt(geolocationData[
-                                  'flutterGeolocationIndex'] ??
+                                          'flutterGeolocationIndex'] ??
                                       0)!,
                                   PositionOptions()
                                       .from(geolocationData['option'] ?? null));
@@ -530,7 +540,7 @@ class WebViewElementState extends State<WebViewElement>
                             case "watchPosition":
                               _geolocationWatchPosition(
                                   parseInt(geolocationData[
-                                  'flutterGeolocationIndex'] ??
+                                          'flutterGeolocationIndex'] ??
                                       0)!,
                                   PositionOptions()
                                       .from(geolocationData['option'] ?? null));
@@ -552,15 +562,15 @@ class WebViewElementState extends State<WebViewElement>
         ]),
         (isLoading && widget.loader != "empty")
             ? Positioned(
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: Loader(
-                type: widget.loader!,
-                color: themeProvider.isLightTheme
-                    ? HexColor(widget.loaderColor!)
-                    : themeProvider.darkTheme.primaryColor))
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Loader(
+                    type: widget.loader!,
+                    color: themeProvider.isLightTheme
+                        ? HexColor(widget.loaderColor!)
+                        : themeProvider.darkTheme.primaryColor))
             : Container()
       ],
     );
@@ -751,7 +761,7 @@ class WebViewElementState extends State<WebViewElement>
   void _geolocationGetCurrentPosition(
       int flutterGeolocationIndex, PositionOptions positionOptions) async {
     PositionResponse positionResponse =
-    await getCurrentPosition(positionOptions);
+        await getCurrentPosition(positionOptions);
 
     _geolocationResponse(
         flutterGeolocationIndex, positionOptions, positionResponse, false);
@@ -794,13 +804,13 @@ class WebViewElementState extends State<WebViewElement>
           });''' +
           (!watcher
               ? "  _flutterGeolocationSuccess[" +
-              flutterGeolocationIndex.toString() +
-              "] = null; "
+                  flutterGeolocationIndex.toString() +
+                  "] = null; "
               : "") +
           (!watcher
               ? "  _flutterGeolocationError[" +
-              flutterGeolocationIndex.toString() +
-              "] = null; "
+                  flutterGeolocationIndex.toString() +
+                  "] = null; "
               : "") +
           '''
           return true;
@@ -818,21 +828,21 @@ class WebViewElementState extends State<WebViewElement>
           '''] != null) {''' +
           (positionResponse.timedOut
               ? "_flutterGeolocationError[" +
-              flutterGeolocationIndex.toString() +
-              "]({code: 3, message: 'Request timed out', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3}); "
+                  flutterGeolocationIndex.toString() +
+                  "]({code: 3, message: 'Request timed out', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3}); "
               : "_flutterGeolocationError[" +
-              flutterGeolocationIndex.toString() +
-              "]({code: 1, message: 'User denied Geolocationg', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3}); ") +
+                  flutterGeolocationIndex.toString() +
+                  "]({code: 1, message: 'User denied Geolocationg', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3}); ") +
           "}" +
           (!watcher
               ? "  _flutterGeolocationSuccess[" +
-              flutterGeolocationIndex.toString() +
-              "] = null; "
+                  flutterGeolocationIndex.toString() +
+                  "] = null; "
               : "") +
           (!watcher
               ? "  _flutterGeolocationError[" +
-              flutterGeolocationIndex.toString() +
-              "] = null; "
+                  flutterGeolocationIndex.toString() +
+                  "] = null; "
               : "") +
           '''
           return true;
@@ -863,12 +873,12 @@ class WebViewElementState extends State<WebViewElement>
     webViewGPSPositionStreams[flutterGeolocationIndex] =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position position) {
-          // Send data to each warcher
-          PositionResponse positionResponse = PositionResponse()
-            ..position = position;
-          _geolocationResponse(
-              flutterGeolocationIndex, positionOptions, positionResponse, true);
-        });
+      // Send data to each warcher
+      PositionResponse positionResponse = PositionResponse()
+        ..position = position;
+      _geolocationResponse(
+          flutterGeolocationIndex, positionOptions, positionResponse, true);
+    });
   }
 
   Future<bool?> goBack() async {

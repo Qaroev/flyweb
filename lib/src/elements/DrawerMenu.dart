@@ -27,7 +27,7 @@ class _DrawerMenu extends State<DrawerMenu> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeNotifier>(context);
-
+     print(widget.text);
     return widget.type == "divider"
         ? Padding(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -56,17 +56,27 @@ class _DrawerMenu extends State<DrawerMenu> {
         item_icon = Icons.home;
         break;
       case "share":
-        item_icon = Icons.share;
-        break;
+        return Image.asset(
+          "assets/img/ic_share.png",
+          width: 20,
+          height: 20,
+        );
       case "about":
         item_icon = Icons.info;
-        break;
+        return Image.asset(
+          "assets/img/ic_contacts.png",
+          width: 20,
+          height: 20,
+        );
       case "notification":
         item_icon = Icons.notifications;
         break;
       case "rate_us":
-        item_icon = Icons.star;
-        break;
+        return Image.asset(
+          "assets/img/ic_rate.png",
+          width: 20,
+          height: 20,
+        );
       case "languages":
         item_icon = Icons.translate;
         break;
